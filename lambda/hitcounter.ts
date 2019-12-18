@@ -1,3 +1,4 @@
+// Count how many requests were issued to each URL path. It will store this in a DynamoDB table.
 const { DynamoDB, Lambda } = require('aws-sdk');
 
 exports.handler = async function(event: any) {
@@ -26,3 +27,5 @@ exports.handler = async function(event: any) {
   // return response back to upstream caller
   return JSON.parse(resp.Payload);
 };
+
+export {};

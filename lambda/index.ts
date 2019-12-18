@@ -1,3 +1,4 @@
+// parse each request event body (which filled by SQS message). It will store this in a DynamoDB table.
 const { DynamoDB } = require('aws-sdk');
 
 exports.handler = async function(event: any) {
@@ -17,3 +18,5 @@ exports.handler = async function(event: any) {
     }).promise();
   }
 };
+
+export {};
