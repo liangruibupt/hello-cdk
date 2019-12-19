@@ -111,7 +111,7 @@ new apigw.LambdaRestApi(this, 'CdkWorkshopAPI', {
 
 # Use 3rd party Construct Libraries 
 ## Demo aws-ecs-patterns to quick deploy ECS fargate cluster to consume SQS message by using Queue Processing Services
-[aws-ecs-patterns](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-ecs-patterns-readme.html "aws-ecs-patterns")
+More details please refer [aws-ecs-patterns](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-ecs-patterns-readme.html "aws-ecs-patterns")
 
 ```
 # Build your SQS Consumer
@@ -126,19 +126,28 @@ import ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
 ```
 
 Outputs:
+```
 FargateSQSCdkStack.FargateSQSCdkAPIEndpoint4FA94840 = https://j70sgjwic8.execute-api.cn-north-1.amazonaws.com.cn/prod/
 FargateSQSCdkStack.MyQueueProcessingServiceSQSQueueCB188552 = FargateSQSCdkStack-FargateSQSCdkQueueDD868C53-C0NCCHF2LSO7
 FargateSQSCdkStack.MyQueueProcessingServiceSQSQueueArnC96507D6 = arn:aws-cn:sqs:cn-north-1:876820548815:FargateSQSCdkStack-FargateSQSCdkQueueDD868C53-C0NCCHF2LSO7
+```
 
 # Trouble shooting
 ## Compile error: Argument of type 'this' is not assignable to parameter of type 'Construct'
-https://github.com/aws/aws-cdk/issues/542
-Try to upgrade everything to latest version
+
+Fix: 
+Try to upgrade everything to latest version. https://github.com/aws/aws-cdk/issues/542
 
 ## CannotPullECRContainerError
+Error: 
 Status reason   CannotPullECRContainerError: AccessDeniedException: User: arn:aws-cn:sts::876820548815:assumed-role/FargateSQSCdkStack-MyQueueProcessingServiceQueuePr-XVNZR7I99PT3/036623ba-fb6e-4df9-8900-099ff8e9086e is not authorized to perform: ecr:GetAuthorizationToke
+
+Fix: 
 Update the code to ```image: ecs.ContainerImage.fromEcrRepository(myRepository, 'latest')```
 
 ## AccessDenied for ReceiveMessage
+Error: 
 An error occurred (AccessDenied) when calling the ReceiveMessage operation: Access to the resource https://cn-north-1.queue.amazonaws.com.cn/ is denied.
+
+Fix: 
 Update the code to ```mySQSqueue.grantConsumeMessages(myQueueProcessingService.taskDefinition.taskRole);```
