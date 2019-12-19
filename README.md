@@ -1,13 +1,11 @@
 # Welcome to your CDK TypeScript project!
 
 This is a quick start project for TypeScript development with CDK. More concept of AWS CDK you can refer: 
-[aws-cdk-guide](https://docs.aws.amazon.com/cdk/latest/guide/home.html "aws-cdk-guide")
-[cdkworkshop](https://cdkworkshop.com/ "cdkworkshop")
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+[aws-cdk-guide](https://docs.aws.amazon.com/cdk/latest/guide/home.html "aws-cdk-guide") and [cdkworkshop](https://cdkworkshop.com/ "cdkworkshop")
 
 # First time run to bootstrap the CDK Toolkit in your environment
 CDKToolkit CloudFormation Stack will be created and make sure it executed successfully.
+The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 ```
 cdk bootstrap
@@ -127,7 +125,20 @@ npm install @aws-cdk/aws-ecs-patterns
 import ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
 ```
 
+Outputs:
+FargateSQSCdkStack.FargateSQSCdkAPIEndpoint4FA94840 = https://j70sgjwic8.execute-api.cn-north-1.amazonaws.com.cn/prod/
+FargateSQSCdkStack.MyQueueProcessingServiceSQSQueueCB188552 = FargateSQSCdkStack-FargateSQSCdkQueueDD868C53-C0NCCHF2LSO7
+FargateSQSCdkStack.MyQueueProcessingServiceSQSQueueArnC96507D6 = arn:aws-cn:sqs:cn-north-1:876820548815:FargateSQSCdkStack-FargateSQSCdkQueueDD868C53-C0NCCHF2LSO7
+
 # Trouble shooting
 ## Compile error: Argument of type 'this' is not assignable to parameter of type 'Construct'
 https://github.com/aws/aws-cdk/issues/542
 Try to upgrade everything to latest version
+
+## CannotPullECRContainerError
+Status reason   CannotPullECRContainerError: AccessDeniedException: User: arn:aws-cn:sts::876820548815:assumed-role/FargateSQSCdkStack-MyQueueProcessingServiceQueuePr-XVNZR7I99PT3/036623ba-fb6e-4df9-8900-099ff8e9086e is not authorized to perform: ecr:GetAuthorizationToke
+Update the code to ```image: ecs.ContainerImage.fromEcrRepository(myRepository, 'latest')```
+
+## AccessDenied for ReceiveMessage
+An error occurred (AccessDenied) when calling the ReceiveMessage operation: Access to the resource https://cn-north-1.queue.amazonaws.com.cn/ is denied.
+Update the code to ```mySQSqueue.grantConsumeMessages(myQueueProcessingService.taskDefinition.taskRole);```

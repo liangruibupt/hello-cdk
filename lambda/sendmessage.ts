@@ -6,7 +6,7 @@ var sqs = new AWS.SQS({
 // Just echo each request URL path.
 exports.handler = function(event: any, context: any, callback: any) {
     console.log("request:", JSON.stringify(event, undefined, 2));
-    var queueUrl = process.env.QUEUE_NAME;
+    var queueUrl = process.env.QUEUE_URL;
     var msgBody = `Hello, CDK! You have hit ${event.path}`
     console.log("queueUrl: " + queueUrl, "msgBody: " + msgBody);
     // SQS message parameters
