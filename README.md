@@ -151,3 +151,6 @@ An error occurred (AccessDenied) when calling the ReceiveMessage operation: Acce
 
 Fix: 
 Update the code to ```mySQSqueue.grantConsumeMessages(myQueueProcessingService.taskDefinition.taskRole);```
+
+## The package.json or package-lock.json report severity vulnerabilities
+You need run the npm install @aws-cdk/aws-{package1, package2 ...} to upgrade the version
